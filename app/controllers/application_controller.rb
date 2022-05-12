@@ -13,16 +13,22 @@ class ApplicationController < Sinatra::Base
     listingArr = html.css('div.plaque').collect.with_index { |el, index|
       # p el.text #test to see what the element was
       # p "******"
+      Pokemon.create(
         { 
-          scraped_element: el.text,
+          scraped_element: el.content,
           cardName: el.text.gsub!(/\d+/,"").tr("[#", "").tr("-", "").strip,
           set_num: index + 1,
-          id: index 
-        }
+          
+        })
+        
+        
     }    
-     
     { cardList: listingArr }.to_json
-    
+  end
+
+  get "/cards/:id" do
+    cards = Pokemon.find(params[:id])
+    cards.to_json
   end
 
 end

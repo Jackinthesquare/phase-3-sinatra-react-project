@@ -13,9 +13,9 @@
 ActiveRecord::Schema.define(version: 2022_05_10_211105) do
 
   create_table "pokemons", force: :cascade do |t|
-    t.string "name"
-    t.string "type"
-    t.integer "pokedex_number"
+    t.string "scraped_element"
+    t.string "cardName"
+    t.integer "set_num"
   end
 
 end
