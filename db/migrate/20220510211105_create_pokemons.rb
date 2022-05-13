@@ -4,6 +4,7 @@ class CreatePokemons < ActiveRecord::Migration[6.1]
       t.string :scraped_element
       t.string :cardName
       t.integer :set_num
+      t.string :imgSrc
     end
   end
 end

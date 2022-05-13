@@ -3,7 +3,7 @@ class ApplicationController < Sinatra::Base
   
   # Add your routes here
   get "/" do
-    { message: "Good luck with your project!" }.to_json
+    { message: "WELCOME TO MY SINATRA-REACT PROJECT" }.to_json
   end
 
   ### DO NOT TOUCH OR VISIT END POINT OR YOU WILL BE FIRED!
@@ -15,26 +15,48 @@ class ApplicationController < Sinatra::Base
       # p el.text #test to see what the element was
       # p "******"
       Pokemon.create(
-        { 
+        {
           scraped_element: el.content,
           cardName: el.text.gsub!(/\d+/,"").tr("[#", "").tr("-", "").strip,
           set_num: index + 1,
-          
-        })
-    }    
-    { cardList: listingArr }.to_json
+          # imgSrc: "https://den-cards.pokellector.com/119/#{cardName.gsub(' ','-').gsub("'","")}.BS.#{set_num}.png"
+        }
+      )
+    }
+
+    listingArr.each { |el|
+      el.update(
+          imgSrc: "https://den-cards.pokellector.com/119/#{el.cardName.gsub(' ','-').gsub("'","")}.BS.#{el.set_num}.png"
+      )
+    }
+    listingArr.to_json
+
+    # listingArr.each { |el|
+    #   el.imgSrc = "https://den-cards.pokellector.com/119/#{el.cardName.gsub(' ','-').gsub("'","")}.BS.#{el.set_num}.png"
+    # }
+    # { cardList: listingArr }.to_json    
   end
-  ### READ ABOVE
+  ### DO NOT TOUCH OR VISIT END POINT OR YOU WILL BE FIRED!
+
 
   get "/cards" do ### shows list of cards scraped from Pokellector
     cards = Pokemon.all
-    cards.to_json
+    { cardList: cards }.to_json
   end
 
 
   get "/cards/:id" do
     cards = Pokemon.find(params[:id])
     cards.to_json
+  end
+
+  delete '/cards/:id' do
+    cards = Pokemon.find(params[:id])
+    cards.destroy
+  end
+
+  post '/cards' do
+   cards.to_json
   end
 
 end

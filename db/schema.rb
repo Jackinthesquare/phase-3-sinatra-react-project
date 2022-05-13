@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 2022_05_10_211105) do
     t.string "scraped_element"
     t.string "cardName"
     t.integer "set_num"
+    t.string "imgSrc"
   end
 
 end
