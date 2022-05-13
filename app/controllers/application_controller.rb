@@ -56,7 +56,12 @@ class ApplicationController < Sinatra::Base
   end
 
   post '/cards' do
-   cards.to_json
+    cards = Pokemon.create(
+      cardName:params[:cardName],
+      imgSrc:params[:imgSrc],
+      set_num:params[:set_num]
+    )
+    cards.to_json
   end
 
 end
