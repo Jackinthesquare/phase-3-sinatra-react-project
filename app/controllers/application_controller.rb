@@ -19,22 +19,22 @@ class ApplicationController < Sinatra::Base
           scraped_element: el.content,
           cardName: el.text.gsub!(/\d+/,"").tr("[#", "").tr("-", "").strip,
           set_num: index + 1,
-          # imgSrc: "https://den-cards.pokellector.com/119/#{cardName.gsub(' ','-').gsub("'","")}.BS.#{set_num}.png"
+          imgSrc: "https://den-cards.pokellector.com/119/#{el.text.gsub!(/\d+/,"").tr("[#", "").tr("-", "").strip.gsub(' ','-').gsub("'","")}.BS.#{index+1}.png"
         }
       )
     }
 
-    listingArr.each { |el|
-      el.update(
-          imgSrc: "https://den-cards.pokellector.com/119/#{el.cardName.gsub(' ','-').gsub("'","")}.BS.#{el.set_num}.png"
-      )
-    }
-    listingArr.to_json
+    # listingArr.each { |el|
+    #   el.update(
+    #       imgSrc: "https://den-cards.pokellector.com/119/#{el.cardName.gsub(' ','-').gsub("'","")}.BS.#{el.set_num}.png"
+    #   )
+    # }
+    # listingArr.to_json
 
     # listingArr.each { |el|
     #   el.imgSrc = "https://den-cards.pokellector.com/119/#{el.cardName.gsub(' ','-').gsub("'","")}.BS.#{el.set_num}.png"
     # }
-    # { cardList: listingArr }.to_json    
+    { cardList: listingArr }.to_json    
   end
   ### DO NOT TOUCH OR VISIT END POINT OR YOU WILL BE FIRED!
 
@@ -56,12 +56,12 @@ class ApplicationController < Sinatra::Base
   end
 
   post '/cards' do
-    cards = Pokemon.create(
-      cardName:params[:cardName],
-      imgSrc:params[:imgSrc],
-      set_num:params[:set_num]
-    )
+    cards = Pokemon.create(cardName:params[:cardName], set_num:params[:set_num], imgSrc:params[:imgSrc])
     cards.to_json
   end
 
+  # patch '/cards/:id' do
+  # cards = Pokemon.update(cardName:params[:cardName], set_num:params[:set_num], imgSrc:params[:imgSrc])
+  # cards.to_json
+  # end
 end
