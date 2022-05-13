@@ -60,8 +60,9 @@ class ApplicationController < Sinatra::Base
     cards.to_json
   end
 
-  # patch '/cards/:id' do
-  # cards = Pokemon.update(cardName:params[:cardName], set_num:params[:set_num], imgSrc:params[:imgSrc])
-  # cards.to_json
-  # end
+  patch '/cards/:id' do
+  cards = Pokemon.find(params[:id])
+  cards.update(cardName:params[:cardName], set_num:params[:set_num], imgSrc:params[:imgSrc])
+  cards.to_json
+  end
 end
